@@ -16,10 +16,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-vinegar'         " Netwr enchancer
 
 " Autocompletion
-Plug 'SirVer/ultisnips'           " Snippets engine
-Plug 'neovim/nvim-lspconfig'      " Nvim LSP configurations
-Plug 'nvim-lua/completion-nvim'   " Nvim completion engine
-Plug 'nvim-lua/diagnostic-nvim'   " Nvim diagnostic engine
+Plug 'ycm-core/youcompleteme', { 'do': './install.py --clang-completer' }
+Plug 'SirVer/ultisnips'          " Snippets engine
+Plug 'vim-syntastic/syntastic'   " Syntax checker
 
 " Basics
 Plug 'tpope/vim-surround'
@@ -124,43 +123,6 @@ nnoremap <F3> :set list!<CR>
 " => PLUGIN CONFIGURATIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" LSP configuration
-nnoremap <leader>gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <leader>gD    <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <leader><c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <leader>gw    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <leader>gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <leader>af    <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <leader>ee    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
-nnoremap <leader>ar    <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>=     <cmd>lua vim.lsp.buf.formatting()<CR>
-nnoremap <leader>ai    <cmd>lua vim.lsp.buf.incoming_calls()<CR>
-nnoremap <leader>ao    <cmd>lua vim.lsp.buf.outgoing_calls()<CR>
-
-autocmd Filetype c,h,hpp,cc,cpp setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-set completeopt+=preview,menuone,noinsert,noselect
-set shortmess+=c
-
-let g:completion_enable_snippet = 'UltiSnips'
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_trigger_keyword_length = 3
-
-let g:diagnostic_enable_virtual_text = 1 " Enable virtual text display
-let g:diagnostic_insert_delay = 1        " Don't show diagnostics while in insert mode
-
-lua << EOF
-local on_attach_vim = function(client)
-    require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
-end
-require'nvim_lsp'.clangd.setup{on_attach=on_attach_vim}
-EOF
-
 " FZF configuration
 let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
 
@@ -201,6 +163,26 @@ highlight link SignifySignDeleteFirstLine SignifySignDelete
 nnoremap <leader>u  :UndotreeToggle<CR>
 let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_HighlightChangedWithSign = 0
+
+" YCM configuration
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_goto_buffer_command = 'split'
+
+nnoremap <leader>g  :botright vertical YcmCompleter GoTo<CR>
+nnoremap <leader>gd :botright vertical YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>t  :botright vertical YcmCompleter GetType<CR>
+nnoremap <leader>d  :botright vertical YcmCompleter GetDoc<CR>
+nnoremap <leader>fi :YcmCompleter FixIt<CR>
+nnoremap <leader>r  :YcmForceCompileAndDiagnostics<CR>
+
+" Syntastic configuration
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_python_checkers = ['python']
 
 " Ultisnips configuration
 let g:UltiSnipsExpandTrigger = "<tab>"
