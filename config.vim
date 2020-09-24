@@ -16,7 +16,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-vinegar'         " Netwr enchancer
 
 " Autocompletion
-Plug 'ycm-core/youcompleteme', { 'do': './install.py --clang-completer' }
+Plug 'ycm-core/youcompleteme', { 'do': './install.py --clangd-completer' }
 Plug 'SirVer/ultisnips'          " Snippets engine
 Plug 'vim-syntastic/syntastic'   " Syntax checker
 
@@ -174,6 +174,7 @@ nnoremap <leader>gd  :botright vertical YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gD  :botright vertical YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gi  :botright vertical YcmCompleter GoToInclude<CR>
 nnoremap <leader>gt  :botright vertical YcmCompleter GetType<CR>
+nnoremap <leader>gr  :botright vertical YcmCompleter GoToReferences<CR>
 nnoremap <leader>K   :botright vertical YcmCompleter GetDoc<CR>
 nnoremap <leader>af  :YcmCompleter FixIt<CR>
 
