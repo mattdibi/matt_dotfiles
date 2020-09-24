@@ -165,6 +165,8 @@ let g:undotree_SetFocusWhenToggle = 1
 let g:undotree_HighlightChangedWithSign = 0
 
 " YCM configuration
+let g:ycm_clangd_args = ['-cross-file-rename']
+
 let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -177,6 +179,7 @@ nnoremap <leader>gt  :botright vertical YcmCompleter GetType<CR>
 nnoremap <leader>gr  :botright vertical YcmCompleter GoToReferences<CR>
 nnoremap <leader>K   :botright vertical YcmCompleter GetDoc<CR>
 nnoremap <leader>af  :YcmCompleter FixIt<CR>
+nnoremap <leader>ar  :YcmCompleter RefactorRename 
 
 " Syntastic configuration
 let g:syntastic_always_populate_loc_list = 1
